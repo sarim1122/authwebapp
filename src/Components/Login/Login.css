@@ -1,0 +1,46 @@
+.login-main{
+    max-width: 100vw;
+    height: 100vh;
+    display: flex;
+}
+.login-left{
+    width: 50%;
+    /* background-color: green; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.left-content{
+    width: 100%;
+}
+.loginup-heading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10vh;
+    font-size: 2rem;
+    font-weight: 800;
+    color: rgb(73, 72, 72);
+}
+.forget-pass{
+    color: red;
+    font-weight: 600;
+    cursor: pointer;
+}
+.login-right{
+    width: 50%;    
+}
+.login-img{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.loginimg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+}
