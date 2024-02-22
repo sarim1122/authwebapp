@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
 import '../SignUp/SignUp.css'
 import img1 from '../../Assests/SignUpimg1.jpg'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie';
+
+
 
 const SignUp = () => {
+    const [loading, setLoading] = useState(false);
+    let navigate = useNavigate();
     const [data, setData] = useState({
         "first_name": "",
         "last_name": "",
@@ -14,7 +19,8 @@ const SignUp = () => {
     });
 
     const handleClick = async () => {
-        const response = await fetch(` https://creepy-blue-trout.cyclic.app/auth/register`, {
+        setLoading(true)
+        const response = await fetch(`https://employee-app-3tf1.onrender.com/auth/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -25,13 +31,22 @@ const SignUp = () => {
                     last_name: data.last_name,
                     email: data.email,
                     phone: data.phone,
-                    password:data.password,
+                    password: data.password,
                     address: data.address
                 }
             )
         });
         const json = await response.json();
-        console.log(json);
+        if(response.status === 200 && json.token) 
+        {
+            Cookies.set("token",json.token);
+        }
+        else
+        {
+            alert(json.msg)
+        }
+        navigate("/")
+        setLoading(false)
     }
 
     const onChange = (e) => {
@@ -59,7 +74,10 @@ const SignUp = () => {
                         <input onChange={onChange} type="text" name="username" className='input-field' placeholder='Enter Username' required/> */}
                         <label htmlFor="Password">Password</label>
                         <input onChange={onChange} type="password" name="password" className='input-field' placeholder='Enter password' required />
-                        <div className='btn-signup' onClick={handleClick}>Sign Up</div>
+                        <div className='btn-signup' onClick={handleClick}>
+                            {
+                                loading?"Loading..":"Sign Up"
+                            }</div>
                         <span>
                             Already have an account <Link to="/login">Login</Link>
                         </span>

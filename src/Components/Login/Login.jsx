@@ -6,23 +6,39 @@ import Cookies from 'js-cookie';
 
 
 const Login = () => {
+    const [loading, setLoading] = useState(false);
     let navigate = useNavigate();
     const [data, setData] = useState({
         "username":"",
         "password":""
     });
 
-    const chkToken=()=>{
+    const chkToken=async()=>{
         const token = Cookies.get("token");
-        if(token) navigate("/")
+        if(token)
+        {
+            const tokenResponse = await fetch(`https://employee-app-3tf1.onrender.com/auth/verification`, {
+            method: 'GET',
+            headers: {
+                // 'Content-Type': 'application/json',
+                'token': token
+            }
+        });
+        if (tokenResponse.status === 200) {
+            navigate("/")
+        }
+
+        
+        }
     }
 
     useEffect(() => {
         chkToken();
     }, []);
 
-    const handleClick=async()=>{
-        const response = await fetch(`https://creepy-blue-trout.cyclic.app/auth/signin`, {
+    const handleClick=async(e)=>{
+        setLoading(true)
+        const response = await fetch(`https://employee-app-3tf1.onrender.com/auth/signin`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -34,7 +50,6 @@ const Login = () => {
                 }
             )
         });
-        console.log(response);
         const json = await response.json();
         console.log(json);
         if(response.status === 200 && json.token) 
@@ -42,6 +57,10 @@ const Login = () => {
             Cookies.set("token",json.token);
             navigate("/")
         }
+        else{
+            alert(json.msg)
+        }
+        setLoading(false)
     }
 
     const onChange = (e) => {
@@ -59,7 +78,15 @@ const Login = () => {
                             <label htmlFor="Password">Password</label>
                             <input type="password" name="password" className='input-field' onChange={onChange} placeholder='Enter password' required />
                             <Link className='forget-pass' to="/reset">Forget Password</Link>
-                            <div className='btn-signup' onClick={handleClick}>Login</div>
+                            <div className='btn-signup' onClick={handleClick}>
+                                {
+                                    loading?
+                                    "Loading.."
+                                    :
+                                    "Login"
+                                }
+                                
+                            </div>
                             <span>
                                 Dont have an Account? 
                                 <Link to="/signup">Signup</Link>

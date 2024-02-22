@@ -3,34 +3,46 @@ import '../Dashboard/Updatedash.css'
 import { FaUser } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import Dropdown from '../Dropdown/DropDown';
 
 
 
 const UpdateDash = () => {
     let navigate = useNavigate();
     const [data, setData] = useState({});
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
+    const [uloading, setUloading] = useState(false);
 
-    useEffect(() => {
-        //Runs only on the first render
-        fetchData();
-        console.log(data)
-    }, []);
 
-    const fetchData = async () => {
-        const response = await fetch(`https://creepy-blue-trout.cyclic.app/api/user`, {
+
+    const fetchData = async (token) => {
+        setLoading(true)
+
+        const tokenResponse = await fetch(`https://employee-app-3tf1.onrender.com/auth/verification`, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
-                'token': Cookies.get("token")
+                // 'Content-Type': 'application/json',
+                'token': token
             }
         });
-        // console.log(response);
-        const json = await response.json();
-        setData(json.data);
-        // console.log(json.data.email);
-        console.log(json);
+        if (tokenResponse.status === 200) {
+
+            const tokenJson = await tokenResponse.json();
+            const response = await fetch(`https://employee-app-3tf1.onrender.com/api/user`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'token': Cookies.get("token")
+                }
+            });
+            const json = await response.json();
+            setData(json.data);
+        }
+        else{
+            navigate("/login")
+        }
         setLoading(false)
+
     }
 
 
@@ -40,7 +52,8 @@ const UpdateDash = () => {
     }
 
     const handleUpdate = async () => {
-        const response = await fetch(`https://creepy-blue-trout.cyclic.app/api/user/edit`, {
+        setUloading(true)
+        const response = await fetch(`https://employee-app-3tf1.onrender.com/api/user/edit`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -58,8 +71,16 @@ const UpdateDash = () => {
         });
         // console.log(data);
         const json = await response.json();
-        console.log(json);
+        if(response.status==200) navigate("/")
+        setUloading(false)
     }
+
+    useEffect(() => {
+        const token = Cookies.get("token");
+        if (!token) navigate("/login")
+        //Runs only on the first render
+        fetchData(token);
+    }, []);
 
 
     return (
@@ -69,16 +90,7 @@ const UpdateDash = () => {
                 <div className="dashitems">
                     User Dashboard
                 </div>
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" style={{ backgroundColor: "white", color: "rgba(255, 123, 0, 0.824)", border: "none" }} type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <FaUser />
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">My Profile</a></li>
-                        <li><a class="dropdown-item" href="#">Update Profile</a></li>
-                        <li><a class="dropdown-item" href="#">Logout</a></li>
-                    </ul>
-                </div>
+                <Dropdown/>
             </div>
             {
                 loading ?
@@ -102,7 +114,14 @@ const UpdateDash = () => {
                     <textarea className='input-field' name='address' value={data.address} onChange={onChange} required />
                 </form>
             </div>
-            <button className="button-update" onClick={handleUpdate}>Update</button>
+            <button className="button-update" onClick={handleUpdate}>
+                {
+                    uloading?
+                    "Loading ..."
+                    :
+                    "Update"
+                }
+                </button>
                 </>
             }
         </div>

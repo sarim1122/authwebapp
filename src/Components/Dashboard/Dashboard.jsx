@@ -4,6 +4,7 @@ import '../Dashboard/Dashboard.css'
 import { FaUser } from "react-icons/fa6";
 import Cookies from 'js-cookie';
 import { redirect } from 'react-router-dom';
+import Dropdown from '../Dropdown/DropDown';
 
 
 const Dashboard = () => {
@@ -12,48 +13,40 @@ const Dashboard = () => {
     const [loading, setLoading] = useState(true);
 
     const fetchData = async (token) => {
-        const tokenResponse = await fetch(`https://creepy-blue-trout.cyclic.app/auth/verification`, {
+        const tokenResponse = await fetch(`https://employee-app-3tf1.onrender.com/auth/verification`, {
             method: 'GET',
             headers: {
                 // 'Content-Type': 'application/json',
                 'token': token
             }
         });
-        console.log(tokenResponse);
-        const tokenJson = await tokenResponse.json();
-        console.log(token);
-        // console.log(tokenJson);
-        // const response = await fetch(`https://creepy-blue-trout.cyclic.app/api/user`, {
-        //     method: 'GET',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'token': Cookies.get("token")
-        //     }
-        // });
-        // // console.log(response);
-        // const json = await response.json();
-        // setData(json.data);
-        // console.log(json.data.email);
-        // console.log(data);
-        setLoading(false)
+        if (tokenResponse.status === 200) {
+
+            const tokenJson = await tokenResponse.json();
+            const response = await fetch(`https://employee-app-3tf1.onrender.com/api/user`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'token': Cookies.get("token")
+                }
+            });
+            const json = await response.json();
+            setData(json.data);
+            setLoading(false)
+        }
+        else{
+            navigate("/login")
+        }
     }
 
     useEffect(() => {
         const token = Cookies.get("token");
-        if(!token) navigate("/login")
+        if (!token) navigate("/login")
         //Runs only on the first render
         fetchData(token);
-        // console.log(data)
     }, []);
 
-    const handleLogout=()=>{
-        Cookies.remove('token')
-        navigate("/login");
-    }
-
-    const handleUpdate=()=>{
-        navigate("/update");
-    }
+    
 
     return (
 
@@ -62,16 +55,8 @@ const Dashboard = () => {
                 <div className="dashitems">
                     User Dashboard
                 </div>
-                <div className="dropdown">
-                    <button className="btn btn-secondary dropdown-toggle" style={{ backgroundColor: "white", color: "rgba(255, 123, 0, 0.824)", border: "none" }} type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <FaUser />
-                    </button>
-                    <ul className="dropdown-menu">
-                        <li><a className="dropdown-item" href="#">My Profile</a></li>
-                        <li><a className="dropdown-item" href="#" onClick={handleUpdate}>Update Profile</a></li>
-                        <li><a className="dropdown-item" href="#" onClick={handleLogout}>Logout</a></li>
-                    </ul>
-                </div>
+                
+                    <Dropdown/>
             </div>
             {
                 loading ?
