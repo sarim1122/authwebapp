@@ -15,7 +15,7 @@ const Dropdown = () => {
     return (
 
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" style={{ backgroundColor: "white", color: "rgba(255, 123, 0, 0.824)", border: "none" }} type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle" style={{ backgroundColor: "white", color: "rgba(24, 55, 9, 0.644)", border: "none" }} type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <FaUser />
                     </button>
                     <ul className="dropdown-menu">

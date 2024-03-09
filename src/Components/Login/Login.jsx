@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import '../Login/Login.css'
-import img1 from '../../Assests/Login.jpg'
+// import img1 from '../../Assests/Login.jpg'
 import { Link, useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie';
 
@@ -95,11 +95,11 @@ const Login = () => {
                     </div>
                 </div>
             </div>
-            <div className="login-right">
+            {/* <div className="login-right">
             <div className="login-img">
                     <img src={img1} alt="" className='loginimg' />
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }

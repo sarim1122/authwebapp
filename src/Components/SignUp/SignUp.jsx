@@ -85,11 +85,7 @@ const SignUp = () => {
                 </div>
 
             </div>
-            <div className="signup-right">
-                <div className="img">
-                    <img src={img1} alt="" className='signupimg' />
-                </div>
-            </div>
+            
         </div>
     )
 }

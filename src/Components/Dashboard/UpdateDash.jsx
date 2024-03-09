@@ -100,18 +100,18 @@ const UpdateDash = () => {
                 <div className="update-dash-main">
                 <h1 className='dash-heading'>Update User's Details</h1>
                 <form action="" className='form-body'>
-                    <label htmlFor="">First Name</label>
-                    <input value={data.first_name} onChange={onChange} type="text" name='first_name' className='input-field' placeholder='Enter your First Name' required />
-                    <label htmlFor="">Last Name</label>
-                    <input type="text" name="last_name" value={data.last_name} onChange={onChange} className='input-field' placeholder='Enter your Last Name' required />
+                    <label htmlFor="" className='up-label'>First Name</label>
+                    <input value={data.first_name} onChange={onChange} type="text" name='first_name' className='up-input-field' placeholder='Enter your First Name' required />
+                    <label htmlFor="" className='up-label'>Last Name</label>
+                    <input type="text" name="last_name" value={data.last_name} onChange={onChange} className='up-input-field' placeholder='Enter your Last Name' required />
                     
-                    <label htmlFor="">Email</label> 
-                    <input type="text" name="email" value={data.email} className='input-field' onChange={onChange} placeholder='Enter Your Email' required />
+                    <label htmlFor="" className='up-label'>Email</label> 
+                    <input type="text" name="email" value={data.email} className='up-input-field' onChange={onChange} placeholder='Enter Your Email' required />
                
-                    <label htmlFor="phone">Ph-No</label>
-                    <input type="tel" name="phone" value={data.phone} onChange={onChange} className='input-field' placeholder='Enter your Ph-no' required />
-                    <label htmlFor="">Address</label>
-                    <textarea className='input-field' name='address' value={data.address} onChange={onChange} required />
+                    <label htmlFor="phone" className='up-label'>Ph-No</label>
+                    <input type="tel" name="phone" value={data.phone} onChange={onChange} className='up-input-field' placeholder='Enter your Ph-no' required />
+                    <label htmlFor="" className='up-label'>Address</label>
+                    <textarea className='up-input-field' name='address' value={data.address} onChange={onChange} required />
                 </form>
             </div>
             <button className="button-update" onClick={handleUpdate}>

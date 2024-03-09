@@ -69,7 +69,7 @@ const Dashboard = () => {
                                 <div className="item-name">First Name:</div>
                                 <div className="item-content">{data.first_name}</div>
                                 <div className="item-name">Last Name:</div>
-                                <div className="item-content">{data.first_name}</div>
+                                <div className="item-content">{data.last_name}</div>
                             </div>
                             <div className="row2">
                                 <div className="item-name" style={{ paddingRight: "1rem" }}>Email:</div>

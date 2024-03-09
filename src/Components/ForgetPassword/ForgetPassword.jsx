@@ -51,11 +51,7 @@ const ForgetPassword = () => {
                     </form>
                 </div>
             </div>
-            <div className="forgetpass-right">
-                <div className="for-img">
-                    <img src={img1} alt="" className='forimg' />
-                </div>
-            </div>
+           
         </div>
     )
 }

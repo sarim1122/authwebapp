@@ -4,7 +4,7 @@
     display: flex;
 }
 .login-left{
-    width: 50%;
+    width: 100%;
     /* background-color: green; */
     display: flex;
     justify-content: center;
@@ -12,7 +12,7 @@
     flex-direction: column;
 }
 .left-content{
-    width: 100%;
+    width: 50%;
 }
 .loginup-heading{
     display: flex;
